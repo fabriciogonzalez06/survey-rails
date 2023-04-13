@@ -63,7 +63,7 @@ class EvaluationsController < ApplicationController
   private
    
     def set_evaluation
-      @evaluation = Evaluation.find(params[:id])
+      @evaluation = Section.find(params[:id])
     end
 
    
