@@ -2,7 +2,7 @@ class ChaptersController < ApplicationController
   before_action :set_chapter, only: %i[ show edit update destroy ]
 
   def index
-    @chapters = Section.all
+    @chapters = Section.grab_all_evaluations
   end
 
 
@@ -22,7 +22,7 @@ class ChaptersController < ApplicationController
 
     respond_to do |format|
       if @chapter.save
-        format.turbo_stream { render turbo_stream: turbo_stream.replace('chapters_all', partial: 'chapters/chapters', locals: { chapters: Section.all }) }
+        format.turbo_stream { render turbo_stream: turbo_stream.replace('chapters_all', partial: 'chapters/chapters', locals: { chapters: Section.grab_all_evaluations }) }
       else
         format.html { render :new, status: :unprocessable_entity }
       end
@@ -34,7 +34,7 @@ class ChaptersController < ApplicationController
     respond_to do |format|
       if @chapter.update(chapter_params)
         format.html { redirect_to chapter_url(@chapter), notice: "Chapter was successfully updated." }
-        format.json { render :show, status: :ok, location: @chapter }
+        
       else
         format.html { render :edit, status: :unprocessable_entity }
       end
