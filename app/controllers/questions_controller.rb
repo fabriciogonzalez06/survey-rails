@@ -1,7 +1,7 @@
 class QuestionsController < ApplicationController
 
   before_action :set_evaluation, only: %i[create update]
-  before_action :set_question, only: %i[edit update]
+  before_action :set_question, only: %i[edit update destroy]
 
 
   def edit 
@@ -32,6 +32,11 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
+    respond_to do |format|
+      format.turbo_stream { render turbo_stream: turbo_stream.remove("question_#{@question.id}") }
+    end 
+
+    @question.destroy
   end
 
   private 
