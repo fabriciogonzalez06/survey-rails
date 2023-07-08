@@ -3,7 +3,7 @@
         <h2 class="font-semibold text-2xl" >Questions (<%= evaluation.questions.count%>) </h2>
     </div>
 
-    <div class="h-96 overflow-y-auto" >
+    <div class="h-screen overflow-y-auto" >
         <% evaluation.questions.each do |question| %>
             <%= render 'questions/question', question: question %>
         <%end%>
