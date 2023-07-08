@@ -1,0 +1,21 @@
+<%= turbo_frame_tag "option_#{@option.id}" do %>
+    
+    <%= form_with(model: @option, url: question_option_update_path(id: @option.id) , class: "flex flex-col border-2 ") do |f|  %>
+
+        <h4>Edit option</h4>
+        <div >
+            <%= f.rich_text_area :name, id: "option_#{@option.id}" %>
+        </div>
+
+        <div>
+            <span>
+                <%= f.submit "update option" %>
+            </span>
+            <span>
+                <%= link_to "cancel", :back %>
+            </span>
+        </div>
+
+    <%end%>
+
+<%end%>

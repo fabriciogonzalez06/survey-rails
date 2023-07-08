@@ -1,6 +1,11 @@
 class OptionsController < ApplicationController
 
     before_action :set_question, only: %i[create]
+    before_action :set_option, only: %i[edit update]
+
+
+    def edit 
+    end 
 
 
     def create 
@@ -17,6 +22,19 @@ class OptionsController < ApplicationController
     end 
 
 
+    def update 
+        if @option.update(option_params) 
+            respond_to do |format|
+                format.turbo_stream { render turbo_stream: turbo_stream.replace("option_#{@option.id}", partial: 'options/option', locals: { option: @option } ) }
+            end 
+            
+        else
+            format.html { render :new, status: :unprocessable_entity }
+        end
+    end 
+
+   
+
     private 
 
     def set_question 
@@ -25,6 +43,10 @@ class OptionsController < ApplicationController
 
     def option_params 
         params.require(:option).permit(:name)
+    end 
+
+    def set_option 
+        @option = Option.find(params[:id])
     end 
 
 end
